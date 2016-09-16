@@ -32,7 +32,7 @@
     <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
     <!-- Script -->
     <script>
-    var toDoCount = 0; //Intial count variable
+    var todoCount = 0; //Intial count variable
     var todoArray = []; //empty array to hold future todos
 
     //on click event associated with the submit button >> id addTodo
@@ -47,7 +47,7 @@
             //variable that will creat the placeholder for the task i.e. a paragrpah
             var todoItem = $("<p>");
             //the paragraph has a place in the list thus ID of item- order in list
-            todoItem.attr("id", "item-" + toDoCount);
+            todoItem.attr("id", "item-" + todoCount);
             //append the value from input to the paragraph
             todoItem.append('' + todoTask); //with space before the item in the list
             //make a button that is to be placed before each item
@@ -55,7 +55,7 @@
             //make it a chebox
             todoClose.addClass('checkbox');
             //make it in order by addind the data- attribute
-            todoClose.attr("data-todo", toDoCount);
+            todoClose.attr("data-todo", todoCount);
             //mark it with x
             todoClose.append("√");
             //add the todoTask to the array
@@ -72,7 +72,7 @@
             //clear
             $("#todo").val("");
 
-            toDoCount++;
+            todoCount++;
         }
 
         //prevent from refresh
@@ -92,8 +92,41 @@
     });
 
     //reset the count
-    toDoCount = 0;
+    todoCount = 0;
 
+    if (JSON.parse(localStorage.getItem("todos"))) {
+
+        var storedTodos = JSON.parse(localStorage.getItem("todos"));
+        todoArray = storedTodos;
+        console.log(storedTodos);
+
+        for (var i = 0; i < storedTodos.length; i++) {
+
+            var todoTask = storedTodos[todoCount];
+            console.log(todoTask);
+
+            //variable that will creat a new placeholder for the task i.e. a paragrpah
+            var todoItem = $("<p>");
+            //the paragraph has a place in the list thus ID of item- order in list
+            todoItem.attr("id", "item-" + todoCount);
+            //append the value from input to the paragraph
+            todoItem.append('' + todoTask); //with space before the item in the list
+
+            //make a button that is to be placed before each item
+            var todoClose = $("<button>");
+            //make it a chebox
+            todoClose.addClass('checkbox');
+            //make it in order by addind the data- attribute
+            todoClose.attr("data-todo", todoCount);
+            //mark it with x
+            todoClose.append("√");
+
+            todoItem = todoItem.prepend(todoClose);
+            $("#todos").append(todoItem);
+
+            todoCount++;
+          }
+        }
     </script>
 </body>
 
