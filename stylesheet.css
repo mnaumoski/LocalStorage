@@ -1,0 +1,19 @@
+.checkbox {
+  display: inline;
+  margin:10px;
+}
+
+.jumbotron {
+  background-image: url(images.jpeg);
+  color: #072838;
+  text-align: center;
+
+  h1 {
+    font-stretch: extra-expanded;
+    font-size: 2em;
+  }
+}
+
+.well {
+  background: #add8e6;
+}

@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <title>Local ToDO List</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="stylesheet.css">
 </head>
 
 <body>
@@ -15,7 +16,7 @@
 4. Btns for list
 5. Maybe btn to clear? -->
     <div class="jumbotron">
-        <h1>To Do List</h1>
+        <h1><strong>To Do List</strong></h1>
     </div>
     <form class="form-inline">
         <div class="form-group">
@@ -23,6 +24,7 @@
             <input type="text" class="form-control" id="todo" placeholder="type here">
         </div>
         <button type="submit" class="btn btn-default" id="addTodo" value="Add Item">Submit</button>
+        <span class="error"></span>
     </form>
     <br>
     <div class="well" id="todos"></div>
@@ -37,39 +39,61 @@
     $("#addTodo").on('click', function() {
         //get value from input
         var todoTask = $("#todo").val().trim();
-        //variable that will creat the placeholder for the task i.e. a paragrpah
-        var todoItem = $("<p>");
-        //the paragraph has a place in the list thus ID of item- order in list
-        todoItem.attr("id", "item-" + toDoCount);
-        //append the value from input to the paragraph
-        todoItem.append('' + todoTask); //with space before the item in the list
-        //make a button that is to be placed before each item
-        var todoClose = $("<button>");
-        //make it a chebox
-        todoClose.addClass('checkbox');
-        //make it in order by addind the data- attribute
-        todoClose.attr("data-todo", toDoCount);
-        //mark it with x
-        todoClose.append("x");
+        //prevent from blank inputs and buttons
+        if (todoTask == '') {
+            alert("Please type something!!");
+            $(".error").text("*This field is required");
+        } else {
+            //variable that will creat the placeholder for the task i.e. a paragrpah
+            var todoItem = $("<p>");
+            //the paragraph has a place in the list thus ID of item- order in list
+            todoItem.attr("id", "item-" + toDoCount);
+            //append the value from input to the paragraph
+            todoItem.append('' + todoTask); //with space before the item in the list
+            //make a button that is to be placed before each item
+            var todoClose = $("<button>");
+            //make it a chebox
+            todoClose.addClass('checkbox');
+            //make it in order by addind the data- attribute
+            todoClose.attr("data-todo", toDoCount);
+            //mark it with x
+            todoClose.append("√");
+            //add the todoTask to the array
+            todoArray.push(todoTask);
+            console.log(todoArray);
+            //empty the localStorage
+            localStorage.clear();
+            //convert the array into localstorage
+            localStorage.setItem("todos", JSON.stringify(todoArray));
+            //let's prepend the todoclose btn to the p item
+            todoItem = todoItem.prepend(todoClose);
+            //to finish it the todoitem along with the btn need to be displayed in the div
+            $("#todos").append(todoItem);
+            //clear
+            $("#todo").val("");
 
-        //add the todoTask to the array
-        todoArray.push(todoTask);
-        console.log(todoArray);
-        //empty the localStorage
-        localStorage.clear();
-        //convert the array into localstorage
-        localStorage.setItem("todos", JSON.stringify(todoArray));
-        //let's prepend the todoclose btn to the p item
-        todoItem = todoItem.prepend(todoClose);
-        //to finish it the todoitem along with the btn need to be displayed in the div
-        $("#todos").append(todoItem);
-        //clear
-        $("#todo").val();
+            toDoCount++;
+        }
 
-        toDoCount++;
         //prevent from refresh
         return false;
     })
+    $(document.body).on('click', '.checkbox', function() {
+
+        var todoNumber = $(this).data("todo"); //data attribute gives the todoNumber of the button??
+        $("#item-" + todoNumber).empty(); //empty the paragraph
+        console.log(todoNumber);
+        todoArray.splice(todoNumber, 1); //.splice() deletes
+        console.log(todoArray);
+
+        localStorage.clear(); //empty local storage
+        // convertt he array into localStorage
+        localStorage.setItem("todos", JSON.stringify(todoArray));
+    });
+
+    //reset the count
+    toDoCount = 0;
+
     </script>
 </body>
 
