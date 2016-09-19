@@ -18,14 +18,16 @@
     <div class="jumbotron">
         <h1><strong>To Do List</strong></h1>
     </div>
-    <form class="form-inline">
-        <div class="form-group">
-            <label for="todo">Add an item </label>
-            <input type="text" class="form-control" id="todo" placeholder="type here">
-        </div>
-        <button type="submit" class="btn btn-default" id="addTodo" value="Add Item">Submit</button>
-        <span class="error"></span>
-    </form>
+    <div class="container">
+        <form class="form-inline">
+            <div class="form-group">
+                <label for="todo">Add an item </label>
+                <input type="text" class="form-control" id="todo" placeholder="type here">
+            </div>
+            <button type="submit" class="btn btn-default" id="addTodo" value="Add Item">Submit</button>
+            <span class="error"></span>
+        </form>
+    </div>
     <br>
     <div class="well" id="todos"></div>
     <!-- jquery -->
@@ -69,7 +71,7 @@
             todoItem = todoItem.prepend(todoClose);
             //to finish it the todoitem along with the btn need to be displayed in the div
             $("#todos").append(todoItem);
-            //clear
+            //clear or set the value to nothing
             $("#todo").val("");
 
             todoCount++;
@@ -125,8 +127,8 @@
             $("#todos").append(todoItem);
 
             todoCount++;
-          }
         }
+    }
     </script>
 </body>
 

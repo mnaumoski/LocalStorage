@@ -7,14 +7,25 @@
   background-image: url(images.jpeg);
   color: #072838;
   text-align: center;
-
-  h1 {
-    font-stretch: extra-expanded;
-    font-size: 2em;
-  }
+  opacity: .5;
 }
+
+ .jumbotron h1 {
+    font-stretch: extra-expanded;
+    font-size: 10em;
+  }
+
 
 .well {
   background: #add8e6;
+
+}
+
+.container {
+  position: center;
+}
+
+body {
+  background-color: #ddd;
 }
 
